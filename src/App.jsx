@@ -1,13 +1,36 @@
 
 import { useState } from 'react'
 
-import NameInput from './components/NameInput'
-import NameTag from './components/NameTag'
+import ProductList from './components/ProductList'
+import Cart from './components/Cart'
+import CartSummary from './components/CartSummary'
+
 
 const App = () => {
+
+	const [ cart, setCart ] = useState([])
+
+	const onAddToCart = (product) => {
+		setCart([...cart, product])
+	}
+
+	const onRemoveFromCart = index => {
+		setCart(cart.filter((item, i) => i !== index))
+	}
+
+	console.log(cart)
+
 	return (
 		<div>
-			<NameInput />
+			<CartSummary itemCount={cart.length} />
+			<ProductList 
+				onAddToCart={onAddToCart} 
+				onRemove={onRemoveFromCart}
+			/>
+			<Cart 
+				items={cart} 
+				onRemove={onRemoveFromCart} 
+			/>
 		</div>
 	)
 }
